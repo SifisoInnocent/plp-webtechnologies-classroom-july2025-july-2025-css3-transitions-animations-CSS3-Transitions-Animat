@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Web Page Demo</title>
+  <style>
+    /* ===============================
+       General Styles
+    =============================== */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    button {
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    /* ===============================
+       Part 1: CSS Animations
+    =============================== */
+    #animateBtn {
+      transition: background-color 0.5s ease, transform 0.5s ease;
+    }
+    #animateBtn:hover {
+      background-color: #ff7f50;
+      transform: scale(1.2);
+    }
+    .animated-box {
+      width: 100px;
+      height: 100px;
+      background-color: #3498db;
+      margin-top: 20px;
+      transition: transform 0.5s ease, background-color 0.5s ease;
+    }
+    .animated-box.active {
+      transform: rotate(180deg) scale(1.5);
+      background-color: #2ecc71;
+    }
+    /* ===============================
+       Form Styles
+    =============================== */
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+    }
+    input, button {
+      padding: 8px;
+      margin: 5px 0 15px;
+    }
+    #formMessage {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>Interactive Web Page Demo</h1>
+  </header>
+
+  <!-- Part 1: CSS Animations -->
+  <section id="css-animations">
+    <h2>CSS Transitions & Animations</h2>
+    <button id="animateBtn">Hover or Click Me</button>
+    <div class="animated-box" id="box"></div>
+  </section>
+
+  <!-- Part 2: JavaScript Functions -->
+  <section id="js-functions">
+    <h2>JavaScript Functions & Scope</h2>
+    <p id="functionOutput"></p>
+    <button onclick="displaySum()">Calculate Sum</button>
+  </section>
+
+  <!-- Part 3: Loops & DOM Interaction -->
+  <section id="loops-dom">
+    <h2>Loops & DOM Interaction</h2>
+    <ul id="fruitList"></ul>
+    <button onclick="populateList()">Show Fruits</button>
+  </section>
+
+  <!-- Part 4: Form Validation -->
+  <section id="form-validation">
+    <h2>Form Validation</h2>
+    <form id="userForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required minlength="3" placeholder="Enter your name">
+      
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required placeholder="Enter your email">
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required minlength="6" placeholder="Enter password">
+
+      <button type="submit">Submit</button>
+      <p id="formMessage"></p>
+    </form>
+  </section>
+
+  <script>
+    /* ========================================
+       Part 1: CSS Animations with JS
+    ======================================== */
+    const animateBtn = document.getElementById('animateBtn');
+    const box = document.getElementById('box');
+
+    animateBtn.addEventListener('click', () => {
+      box.classList.toggle('active'); // toggles CSS animation class
+    });
+
+    /* ========================================
+       Part 2: JS Functions, Scope, Parameters
+    ======================================== */
+    function sum(a, b) {
+      return a + b; // return value
+    }
+
+    function displaySum() {
+      const result = sum(5, 10); // local variables
+      document.getElementById('functionOutput').textContent = "Sum of 5 + 10 = " + result;
+    }
+
+    /* ========================================
+       Part 3: Loops & DOM Interaction
+    ======================================== */
+    const fruits = ["Apple", "Banana", "Orange", "Mango"];
+
+    function populateList() {
+      const ul = document.getElementById('fruitList');
+      ul.innerHTML = ""; // clear existing
+      for (let i = 0; i < fruits.length; i++) { // loop example
+        const li = document.createElement('li'); // DOM interaction
+        li.textContent = fruits[i];
+        ul.appendChild(li);
+      }
+    }
+
+    /* ========================================
+       Part 4: Form Validation with JS
+    ======================================== */
+    const form = document.getElementById('userForm');
+    const formMessage = document.getElementById('formMessage');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // prevent actual submission
+
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const password = form.password.value;
+
+      if(name.length < 3) {
+        formMessage.textContent = "Name must be at least 3 characters!";
+        formMessage.style.color = "red";
+        return;
+      }
+
+      if(!email.includes("@")) {
+        formMessage.textContent = "Please enter a valid email!";
+        formMessage.style.color = "red";
+        return;
+      }
+
+      if(password.length < 6) {
+        formMessage.textContent = "Password must be at least 6 characters!";
+        formMessage.style.color = "red";
+        return;
+      }
+
+      formMessage.textContent = "Form submitted successfully!";
+      formMessage.style.color = "green";
+    });
+  </script>
+</body>
+</html>
